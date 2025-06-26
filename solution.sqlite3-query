@@ -1,0 +1,90 @@
+-- database: ./shop.db
+
+
+
+CREATE TABLE products (
+    product_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    category TEXT NOT NULL,
+    price REAL NOT NULL
+);
+
+CREATE TABLE customers ( customer_id INTEGER PRIMARY KEY AUTOINCREMENT,
+     first_name TEXT NOT NULL, 
+    last_name TEXT NOT NULL, 
+    email TEXT NOT NULL UNIQUE );
+
+CREATE TABLE orders ( order_id INTEGER PRIMARY KEY AUTOINCREMENT, 
+    customer_id INTEGER NOT NULL, 
+    product_id INTEGER NOT NULL, 
+    quantity INTEGER NOT NULL, 
+    order_date DATE NOT NULL, 
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id), 
+    FOREIGN KEY (product_id) REFERENCES products(product_id) );
+
+
+INSERT INTO products (name, category, price) VALUES 
+('iPhone 14', 'смартфони', 999.99),
+('Samsung Galaxy S23', 'смартфони', 899.99),
+('MacBook Air M2', 'ноутбуки', 1249.99),
+('Dell XPS 13', 'ноутбуки', 1099.99),
+('iPad Pro', 'планшети', 799.99),
+('Samsung Galaxy Tab S8', 'планшети', 749.99),
+('Sony WH-1000XM5', 'навушники', 349.99),
+('Apple Watch Series 9', 'розумні годинники', 399.99),
+('Xiaomi Redmi Note 12', 'смартфони', 299.99),
+('Lenovo IdeaPad 3', 'ноутбуки', 599.99);
+
+
+INSERT INTO customers (first_name, last_name, email) VALUES 
+('Олександр', 'Іваненко', 'ivanenko@example.com'),
+('Марія', 'Ковальчук', 'kovalchuk@example.com'),
+('Ігор', 'Сидоренко', 'sydorenko@example.com'),
+('Олена', 'Ткаченко', 'tkachenko@example.com'),
+('Дмитро', 'Шевченко', 'shevchenko@example.com'),
+('Наталія', 'Бондар', 'bondar@example.com'),
+('Андрій', 'Мельник', 'melnyk@example.com'),
+('Світлана', 'Кравченко', 'kravchenko@example.com'),
+('Руслан', 'Литвин', 'lytvyn@example.com'),
+('Інна', 'Петренко', 'petrenko@example.com');
+
+INSERT INTO orders (customer_id, product_id, quantity, order_date) VALUES 
+(1, 1, 1, '2025-06-20'),
+(2, 3, 1, '2025-06-20'),
+(3, 2, 2, '2025-06-21'),
+(4, 5, 1, '2025-06-22'),
+(5, 4, 1, '2025-06-22'),
+(6, 6, 3, '2025-06-23'),
+(7, 7, 1, '2025-06-23'),
+(8, 8, 1, '2025-06-24'),
+(9, 9, 2, '2025-06-24'),
+(10, 10, 1, '2025-06-25');
+
+
+-- сума всіх замовлень
+SELECT SUM(products.price * orders.quantity) AS Total_Sales
+FROM orders 
+INNER JOIN products ON orders.product_id = products.product_id;
+
+
+-- Виводить та додає всі замовлення для кожного клієнта окремо
+SELECT customers.first_name , customers.last_name ,COUNT(orders.order_id) AS Order_Count
+FROM customers 
+INNER JOIN orders ON customers.customer_id = orders.customer_id
+GROUP BY customers.customer_id;
+
+
+-- знайшли середнє значення всіх замовлень 
+SELECT ROUND(AVG(products.price * orders.quantity), 2) AS AVG_Sales
+FROM orders 
+INNER JOIN products ON orders.product_id = products.product_id;
+
+
+-- Виводить одну найпорулярнішу покупку
+SELECT products.category , COUNT(orders.order_id) AS Order_Count
+FROM orders
+INNER JOIN products ON orders.product_id = products.product_id
+GROUP BY products.category
+ORDER BY Order_Count DESC 
+LIMIT 1;
+
