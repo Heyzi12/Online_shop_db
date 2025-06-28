@@ -1,9 +1,11 @@
 import sqlite3
-import os
 from language import*
 import time
 from os_command import*
+import subprocess
 
+
+subprocess.run(["h.bat"])
 
 connect = sqlite3.connect("shop.db")
 cursor = connect.cursor()
