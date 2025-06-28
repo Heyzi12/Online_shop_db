@@ -62,6 +62,7 @@ INSERT INTO orders (customer_id, product_id, quantity, order_date) VALUES
 
 
 -- сума всіх замовлень
+
 SELECT SUM(products.price * orders.quantity) AS Total_Sales
 FROM orders 
 INNER JOIN products ON orders.product_id = products.product_id;
@@ -75,6 +76,7 @@ GROUP BY customers.customer_id;
 
 
 -- знайшли середнє значення всіх замовлень 
+
 SELECT ROUND(AVG(products.price * orders.quantity), 2) AS AVG_Sales
 FROM orders 
 INNER JOIN products ON orders.product_id = products.product_id;
@@ -88,3 +90,20 @@ GROUP BY products.category
 ORDER BY Order_Count DESC 
 LIMIT 1;
 
+
+-- Кількість товарів у кожній категорії
+SELECT products.category , COUNT(products.category) AS Category_Count
+FROM products
+GROUP BY products.category;
+
+
+-- Змінна ціни в категорії "Смартфони" на 10%
+UPDATE products
+SET price = ROUND((price * 1.1), 2)
+WHERE category = "смартфони";
+
+
+-- дістати всі категорії
+SELECT category
+FROM products 
+GROUP BY category
