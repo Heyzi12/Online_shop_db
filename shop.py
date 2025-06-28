@@ -2,10 +2,10 @@ import sqlite3
 from language import*
 import time
 from os_command import*
-import subprocess
 
 
-subprocess.run(["h.bat"])
+
+
 
 connect = sqlite3.connect("shop.db")
 cursor = connect.cursor()
@@ -13,7 +13,7 @@ cursor = connect.cursor()
 
 rows = cursor.fetchall()
 
-
+cls_nt()
 language = input("оберіть мову : UA -- 1"
 "\n               EN -- 2\n")
 
