@@ -11,15 +11,9 @@ def sort_data(*args):
     for result in args:
         for first_result in result:
 
-            
-
-            if isinstance(first_result , int):
-                for last_result in first_result:
-
-                    print(last_result)
-
 
             if first_result is str and float or int:
+
 
                 for item , last_result in enumerate(first_result):
 
@@ -31,6 +25,21 @@ def sort_data(*args):
                 for last_result in first_result:
 
                     print(last_result)
+
+
+    def sort_str_data(*args):
+        num = 0
+        for sort in args:
+            for sort_data in sort:
+                for result in sort_data:
+                    num += 1
+                    print(f"\t {num} --- {result}")
+    return sort_str_data
+
+
+
+
+
 
 
 def sort_price(*args):
@@ -60,4 +69,8 @@ cursor_category.execute(
     )
 
 rows_category = cursor_category.fetchall()
-sort_data(rows_category)
+ssd = sort_data()
+
+def category():
+    s = ssd(rows_category)
+

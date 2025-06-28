@@ -95,5 +95,5 @@ while True:
 
         if choose == 6:
             choose = input("виберіть категорію")
-
+            category()
         
