@@ -2,6 +2,10 @@ import os
 import time
 from language import *
 import sqlite3
+import subprocess
+
+subprocess.run(["h.bat"])
+
 
 def cls_nt():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -74,3 +78,10 @@ ssd = sort_data()
 def category():
     s = ssd(rows_category)
 
+
+
+
+
+
+    
+    
